@@ -1,0 +1,51 @@
+# Binaries
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Dependency directories
+vendor/
+
+# Go workspace file
+go.work
+
+# Environment variables
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Swagger generated files
+docs/swagger.json
+docs/swagger.yaml
+docs/docs.go
+
+# Coverage
+coverage.out
+*.coverprofile
+
+# Migrations (if using external migration tool)
+migrations/*.sql
+!migrations/.gitkeep
+

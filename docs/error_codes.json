@@ -1,0 +1,101 @@
+{
+  "errorCodes": {
+    "GENERAL": {
+      "INTERNAL_ERROR": {
+        "code": "INTERNAL_ERROR",
+        "message": "An internal server error occurred",
+        "httpStatus": 500
+      },
+      "BAD_REQUEST": {
+        "code": "BAD_REQUEST",
+        "message": "Invalid request",
+        "httpStatus": 400
+      },
+      "NOT_FOUND": {
+        "code": "NOT_FOUND",
+        "message": "Resource not found",
+        "httpStatus": 404
+      },
+      "UNAUTHORIZED": {
+        "code": "UNAUTHORIZED",
+        "message": "Unauthorized access",
+        "httpStatus": 401
+      },
+      "FORBIDDEN": {
+        "code": "FORBIDDEN",
+        "message": "Access forbidden",
+        "httpStatus": 403
+      },
+      "VALIDATION_ERROR": {
+        "code": "VALIDATION_ERROR",
+        "message": "Validation failed",
+        "httpStatus": 400
+      },
+      "INVALID": {
+        "code": "INVALID",
+        "message": "Invalid input",
+        "httpStatus": 400
+      },
+      "RATE_LIMIT_EXCEEDED": {
+        "code": "RATE_LIMIT_EXCEEDED",
+        "message": "Rate limit exceeded",
+        "httpStatus": 429
+      },
+      "REQUEST_TIMEOUT": {
+        "code": "REQUEST_TIMEOUT",
+        "message": "Request timeout",
+        "httpStatus": 504
+      }
+    },
+    "USER": {
+      "EMAIL_EXISTS": {
+        "code": "EMAIL_EXISTS",
+        "message": "Email already exists",
+        "httpStatus": 400
+      },
+      "USER_NOT_FOUND": {
+        "code": "USER_NOT_FOUND",
+        "message": "User not found",
+        "httpStatus": 404
+      },
+      "USER_ALREADY_EXISTS": {
+        "code": "USER_ALREADY_EXISTS",
+        "message": "User already exists",
+        "httpStatus": 400
+      },
+      "INVALID_CREDENTIALS": {
+        "code": "INVALID_CREDENTIALS",
+        "message": "Invalid credentials",
+        "httpStatus": 401
+      },
+      "USER_INACTIVE": {
+        "code": "USER_INACTIVE",
+        "message": "User account is inactive",
+        "httpStatus": 403
+      }
+    },
+    "DATABASE": {
+      "DATABASE_ERROR": {
+        "code": "DATABASE_ERROR",
+        "message": "Database error occurred",
+        "httpStatus": 500
+      },
+      "RECORD_NOT_FOUND": {
+        "code": "RECORD_NOT_FOUND",
+        "message": "Record not found",
+        "httpStatus": 404
+      },
+      "DUPLICATE_ENTRY": {
+        "code": "DUPLICATE_ENTRY",
+        "message": "Duplicate entry",
+        "httpStatus": 400
+      },
+      "CONSTRAINT_VIOLATION": {
+        "code": "CONSTRAINT_VIOLATION",
+        "message": "Constraint violation",
+        "httpStatus": 400
+      }
+    }
+  }
+}
+
