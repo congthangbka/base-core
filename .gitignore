@@ -49,3 +49,8 @@ coverage.out
 migrations/*.sql
 !migrations/.gitkeep
 
+# Documentation files (local only, exclude README.md files)
+*.md
+!README.md
+!**/README.md
+

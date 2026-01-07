@@ -6,13 +6,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// CORS returns a CORS middleware
+// CORS returns a CORS middleware with default configuration
+// In development, allows all origins. In production, use CORSWithConfig instead.
 func CORS() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		origin := c.Request.Header.Get("Origin")
 		
-		// Allow all origins in development, restrict in production
-		// In production, you should validate against a whitelist
+		// Default: allow all origins (for development)
+		// In production, use CORSWithConfig with whitelist
 		if origin != "" {
 			c.Writer.Header().Set("Access-Control-Allow-Origin", origin)
 		} else {
@@ -25,6 +26,57 @@ func CORS() gin.HandlerFunc {
 		c.Writer.Header().Set("Access-Control-Max-Age", "86400")
 
 		// Handle preflight requests
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+
+		c.Next()
+	}
+}
+
+// CORSWithProductionConfig returns a CORS middleware with production-safe configuration
+// allowedOrigins: list of allowed origins. Empty or ["*"] allows all (development mode)
+// isProduction: if true, only allows origins from allowedOrigins list
+func CORSWithProductionConfig(allowedOrigins []string, isProduction bool) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		origin := c.Request.Header.Get("Origin")
+		
+		allowed := false
+		
+		if !isProduction {
+			// Development: allow all origins
+			allowed = true
+		} else {
+			// Production: check whitelist
+			if len(allowedOrigins) == 0 || (len(allowedOrigins) == 1 && allowedOrigins[0] == "*") {
+				// No whitelist specified, deny all in production
+				allowed = false
+			} else {
+				// Check if origin is in whitelist
+				for _, allowedOrigin := range allowedOrigins {
+					if origin == allowedOrigin {
+						allowed = true
+						break
+					}
+				}
+			}
+		}
+		
+		if allowed {
+			if origin != "" {
+				c.Writer.Header().Set("Access-Control-Allow-Origin", origin)
+			} else {
+				c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+			}
+		}
+		// If not allowed, don't set header (browser will block)
+		
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With, X-Request-ID")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE, PATCH")
+		c.Writer.Header().Set("Access-Control-Max-Age", "86400")
+
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(204)
 			return

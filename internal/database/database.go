@@ -8,8 +8,8 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 
-	"github.com/example/clean-architecture/internal/config"
-	"github.com/example/clean-architecture/internal/entity"
+	"llm-aggregator/internal/config"
+	"llm-aggregator/internal/entity"
 )
 
 func NewConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
@@ -37,6 +37,7 @@ func NewConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 func AutoMigrate(db *gorm.DB) error {
 	return db.AutoMigrate(
 		&entity.User{},
+		&entity.Order{},
 		// Add other entities here
 	)
 }

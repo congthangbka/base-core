@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/example/clean-architecture/internal/config"
+	"llm-aggregator/internal/config"
 	"github.com/gin-gonic/gin"
 )
 

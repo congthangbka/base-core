@@ -3,7 +3,7 @@ package validator
 import (
 	"fmt"
 
-	"github.com/example/clean-architecture/internal/modules/user/dto"
+	"llm-aggregator/internal/modules/user/dto"
 	"github.com/go-playground/validator/v10"
 )
 

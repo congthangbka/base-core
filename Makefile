@@ -42,5 +42,6 @@ fmt:
 
 swagger:
 	@echo "Generating Swagger docs..."
-	@swag init -g cmd/app/main.go
+	@which swag > /dev/null || (echo "Installing swag..." && go install github.com/swaggo/swag/cmd/swag@latest)
+	@PATH="$$(go env GOPATH)/bin:$$PATH" swag init -g cmd/app/main.go
 

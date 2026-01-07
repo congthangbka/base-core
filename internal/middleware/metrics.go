@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/example/clean-architecture/internal/metrics"
+	"llm-aggregator/internal/metrics"
 )
 
 // Metrics middleware to collect Prometheus metrics

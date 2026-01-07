@@ -17,8 +17,9 @@ type Config struct {
 }
 
 type ServerConfig struct {
-	Port string
-	Host string
+	Port       string
+	Host       string
+	CORSOrigins string // Comma-separated list of allowed CORS origins
 }
 
 type DatabaseConfig struct {
@@ -95,10 +96,15 @@ func Load() (*Config, error) {
 		}
 	}
 
+	// Determine if production mode
+	env := getEnv("ENV", "development")
+	isProduction := env == "production" || env == "prod"
+
 	cfg := &Config{
 		Server: ServerConfig{
-			Port: getEnv("SERVER_PORT", "8085"),
-			Host: getEnv("SERVER_HOST", "0.0.0.0"),
+			Port:        getEnv("SERVER_PORT", "8085"),
+			Host:        getEnv("SERVER_HOST", "0.0.0.0"),
+			CORSOrigins: getEnv("CORS_ORIGINS", ""),
 		},
 		Database: DatabaseConfig{
 			Host:     getEnv("DB_HOST", "localhost"),
@@ -119,6 +125,9 @@ func Load() (*Config, error) {
 			RateLimitRPS:          rateLimitRPS,
 			RateLimitBurst:        rateLimitBurst,
 			MaxRequestSizeMB:      maxRequestSizeMB,
+		},
+		App: AppConfig{
+			IsProduction: isProduction,
 		},
 	}
 

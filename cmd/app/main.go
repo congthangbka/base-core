@@ -1,6 +1,6 @@
-// @title           Clean Architecture API
+// @title           LLM Aggregator API
 // @version         1.0
-// @description     A complete Golang project following Clean Architecture and DDD principles.
+// @description     LLM Aggregator - A production-ready Golang API following Clean Architecture and DDD principles.
 // @termsOfService  http://swagger.io/terms/
 
 // @contact.name   API Support
@@ -27,14 +27,14 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/example/clean-architecture/internal/common"
-	"github.com/example/clean-architecture/internal/config"
-	"github.com/example/clean-architecture/internal/database"
-	"github.com/example/clean-architecture/internal/logger"
-	"github.com/example/clean-architecture/internal/router"
-	"github.com/example/clean-architecture/internal/server"
+	"llm-aggregator/internal/common"
+	"llm-aggregator/internal/config"
+	"llm-aggregator/internal/database"
+	"llm-aggregator/internal/logger"
+	"llm-aggregator/internal/router"
+	"llm-aggregator/internal/server"
 
-	_ "github.com/example/clean-architecture/docs" // Swagger documentation
+	_ "llm-aggregator/docs" // Swagger documentation
 )
 
 // @Summary     Health check
@@ -141,4 +141,3 @@ func main() {
 
 	logger.GetLogger().Info("Server exited")
 }
-

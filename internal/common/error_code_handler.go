@@ -9,9 +9,8 @@ import "github.com/gin-gonic/gin"
 // @Accept      json
 // @Produce     json
 // @Success     200  {object} SuccessResponseDoc{data=ErrorCodesResponse}
-// @Router      /api/v1/error-codes [get]
+// @Router      /error-codes [get]
 func GetErrorCodes(c *gin.Context) {
 	errorCodes := GetAllErrorCodes()
 	RespondSuccess(c, errorCodes)
 }
-

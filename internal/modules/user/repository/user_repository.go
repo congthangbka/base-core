@@ -6,9 +6,9 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/example/clean-architecture/internal/common"
-	"github.com/example/clean-architecture/internal/entity"
-	"github.com/example/clean-architecture/internal/store"
+	"llm-aggregator/internal/common"
+	"llm-aggregator/internal/entity"
+	"llm-aggregator/internal/store"
 )
 
 type UserRepository interface {

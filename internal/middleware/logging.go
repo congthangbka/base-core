@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 
-	"github.com/example/clean-architecture/internal/logger"
+	"llm-aggregator/internal/logger"
 )
 
 const (

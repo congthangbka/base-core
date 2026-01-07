@@ -3,10 +3,10 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 
-	"github.com/example/clean-architecture/internal/common"
-	"github.com/example/clean-architecture/internal/modules/user/dto"
-	"github.com/example/clean-architecture/internal/modules/user/service"
-	"github.com/example/clean-architecture/internal/modules/user/validator"
+	"llm-aggregator/internal/common"
+	"llm-aggregator/internal/modules/user/dto"
+	"llm-aggregator/internal/modules/user/service"
+	"llm-aggregator/internal/modules/user/validator"
 )
 
 type UserHandler struct {
@@ -30,7 +30,7 @@ func NewUserHandler(service service.UserService, validator *validator.UserValida
 // @Success     201  {object} common.SuccessResponseDoc{data=dto.UserResponse}
 // @Failure     400  {object} common.ErrorResponseDoc "Bad Request - Possible error codes: BAD_REQUEST, VALIDATION_ERROR, EMAIL_EXISTS, USER_ALREADY_EXISTS"
 // @Failure     500  {object} common.ErrorResponseDoc "Internal Server Error - Error code: INTERNAL_ERROR"
-// @Router      /api/v1/users [post]
+// @Router      /users [post]
 func (h *UserHandler) Create(c *gin.Context) {
 	ctx := c.Request.Context()
 
@@ -63,7 +63,7 @@ func (h *UserHandler) Create(c *gin.Context) {
 // @Success     200  {object} common.SuccessResponseDoc{data=dto.UserResponse}
 // @Failure     404  {object} common.ErrorResponseDoc "Not Found - Error code: USER_NOT_FOUND"
 // @Failure     500  {object} common.ErrorResponseDoc "Internal Server Error - Error code: INTERNAL_ERROR"
-// @Router      /api/v1/users/{id} [get]
+// @Router      /users/{id} [get]
 func (h *UserHandler) GetByID(c *gin.Context) {
 	ctx := c.Request.Context()
 
@@ -94,7 +94,7 @@ func (h *UserHandler) GetByID(c *gin.Context) {
 // @Success     200   {object} common.SuccessResponseWithPaginationDoc{data=[]dto.UserResponse}
 // @Failure     400   {object} common.ErrorResponseDoc "Bad Request - Possible error codes: BAD_REQUEST, VALIDATION_ERROR"
 // @Failure     500   {object} common.ErrorResponseDoc "Internal Server Error - Error code: INTERNAL_ERROR"
-// @Router      /api/v1/users [get]
+// @Router      /users [get]
 func (h *UserHandler) GetAll(c *gin.Context) {
 	ctx := c.Request.Context()
 
@@ -130,7 +130,7 @@ func (h *UserHandler) GetAll(c *gin.Context) {
 // @Failure     400  {object} common.ErrorResponseDoc "Bad Request - Possible error codes: BAD_REQUEST, VALIDATION_ERROR, EMAIL_EXISTS"
 // @Failure     404  {object} common.ErrorResponseDoc "Not Found - Error code: USER_NOT_FOUND"
 // @Failure     500  {object} common.ErrorResponseDoc "Internal Server Error - Error code: INTERNAL_ERROR"
-// @Router      /api/v1/users/{id} [put]
+// @Router      /users/{id} [put]
 func (h *UserHandler) Update(c *gin.Context) {
 	ctx := c.Request.Context()
 
@@ -169,7 +169,7 @@ func (h *UserHandler) Update(c *gin.Context) {
 // @Success     200  {object} common.SimpleSuccessResponseDoc
 // @Failure     404  {object} common.ErrorResponseDoc "Not Found - Error code: USER_NOT_FOUND"
 // @Failure     500  {object} common.ErrorResponseDoc "Internal Server Error - Error code: INTERNAL_ERROR"
-// @Router      /api/v1/users/{id} [delete]
+// @Router      /users/{id} [delete]
 func (h *UserHandler) Delete(c *gin.Context) {
 	ctx := c.Request.Context()
 

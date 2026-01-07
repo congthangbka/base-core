@@ -1,10 +1,11 @@
 package middleware
 
 import (
-	"net/http"
 	"strings"
 
 	"github.com/gin-gonic/gin"
+
+	"llm-aggregator/internal/common"
 )
 
 // ContentTypeValidation validates Content-Type header
@@ -24,22 +25,14 @@ func ContentTypeValidation() gin.HandlerFunc {
 
 		contentType := c.Request.Header.Get("Content-Type")
 		if contentType == "" {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error":   "Bad Request",
-				"message": "Content-Type header is required",
-				"code":    "MISSING_CONTENT_TYPE",
-			})
+			common.RespondFailWithMessage(c, common.ErrorCodeBadRequest, "Content-Type header is required")
 			c.Abort()
 			return
 		}
 
 		// Check if Content-Type is application/json
 		if !strings.HasPrefix(contentType, "application/json") {
-			c.JSON(http.StatusUnsupportedMediaType, gin.H{
-				"error":   "Unsupported Media Type",
-				"message": "Content-Type must be application/json",
-				"code":    "INVALID_CONTENT_TYPE",
-			})
+			common.RespondFailWithMessage(c, common.ErrorCodeBadRequest, "Content-Type must be application/json")
 			c.Abort()
 			return
 		}
@@ -52,11 +45,7 @@ func ContentTypeValidation() gin.HandlerFunc {
 func RequestSizeValidation(maxSize int64) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if c.Request.ContentLength > maxSize {
-			c.JSON(http.StatusRequestEntityTooLarge, gin.H{
-				"error":   "Request Entity Too Large",
-				"message": "Request body exceeds maximum size",
-				"code":    "REQUEST_TOO_LARGE",
-			})
+			common.RespondFailWithMessage(c, common.ErrorCodeBadRequest, "Request body exceeds maximum size")
 			c.Abort()
 			return
 		}
@@ -64,4 +53,3 @@ func RequestSizeValidation(maxSize int64) gin.HandlerFunc {
 		c.Next()
 	}
 }
-

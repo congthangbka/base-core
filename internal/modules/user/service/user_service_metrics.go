@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/example/clean-architecture/internal/common"
-	"github.com/example/clean-architecture/internal/metrics"
-	"github.com/example/clean-architecture/internal/modules/user/dto"
+	"llm-aggregator/internal/common"
+	"llm-aggregator/internal/metrics"
+	"llm-aggregator/internal/modules/user/dto"
 )
 
 // instrumentedUserService wraps UserService with metrics
@@ -115,4 +115,3 @@ func (s *instrumentedUserService) GetAll(ctx context.Context, req *dto.PagingReq
 
 	return result, err
 }
-

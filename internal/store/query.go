@@ -3,9 +3,38 @@ package store
 import (
 	"context"
 	"fmt"
+	"regexp"
+	"strings"
 
 	"gorm.io/gorm"
 )
+
+// Valid field name pattern: alphanumeric, underscore, dot (for table.field)
+var validFieldNamePattern = regexp.MustCompile(`^[a-zA-Z_][a-zA-Z0-9_.]*$`)
+
+// isValidFieldName validates that field name is safe to use in SQL
+// Prevents SQL injection by only allowing alphanumeric, underscore, and dot characters
+func isValidFieldName(field string) bool {
+	if field == "" {
+		return false
+	}
+	// Check pattern
+	if !validFieldNamePattern.MatchString(field) {
+		return false
+	}
+	// Prevent SQL keywords
+	sqlKeywords := []string{
+		"SELECT", "INSERT", "UPDATE", "DELETE", "DROP", "CREATE", "ALTER",
+		"EXEC", "EXECUTE", "UNION", "SCRIPT", "--", "/*", "*/",
+	}
+	upperField := strings.ToUpper(field)
+	for _, keyword := range sqlKeywords {
+		if strings.Contains(upperField, keyword) {
+			return false
+		}
+	}
+	return true
+}
 
 type Query[T any] struct {
 	db     *gorm.DB
@@ -23,28 +52,28 @@ func NewQuery[T any](db *gorm.DB) *Query[T] {
 }
 
 func (q *Query[T]) Eq(field string, v any) *Query[T] {
-	if v != nil {
+	if v != nil && isValidFieldName(field) {
 		q.db = q.db.Where(fmt.Sprintf("%s = ?", field), v)
 	}
 	return q
 }
 
 func (q *Query[T]) Like(field string, v string) *Query[T] {
-	if v != "" {
+	if v != "" && isValidFieldName(field) {
 		q.db = q.db.Where(fmt.Sprintf("%s LIKE ?", field), "%"+v+"%")
 	}
 	return q
 }
 
 func (q *Query[T]) In(field string, arr []any) *Query[T] {
-	if len(arr) > 0 {
+	if len(arr) > 0 && isValidFieldName(field) {
 		q.db = q.db.Where(fmt.Sprintf("%s IN ?", field), arr)
 	}
 	return q
 }
 
 func (q *Query[T]) Between(field string, from any, to any) *Query[T] {
-	if from != nil && to != nil {
+	if from != nil && to != nil && isValidFieldName(field) {
 		q.db = q.db.Where(fmt.Sprintf("%s BETWEEN ? AND ?", field), from, to)
 	}
 	return q
@@ -59,9 +88,13 @@ func (q *Query[T]) Order(expr string) *Query[T] {
 
 // OrderBy orders by field with direction (ASC or DESC)
 func (q *Query[T]) OrderBy(field, direction string) *Query[T] {
-	if field != "" {
-		if direction == "" {
+	if field != "" && isValidFieldName(field) {
+		// Validate direction
+		upperDir := strings.ToUpper(direction)
+		if upperDir != "ASC" && upperDir != "DESC" {
 			direction = "ASC"
+		} else {
+			direction = upperDir
 		}
 		q.db = q.db.Order(fmt.Sprintf("%s %s", field, direction))
 	}
